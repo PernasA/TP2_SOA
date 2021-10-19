@@ -1,56 +1,56 @@
 package com.example.peluqueria_app.ui.login;
 
+import androidx.annotation.StringRes;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-import androidx.appcompat.app.AppCompatActivity;
-
-
-import androidx.annotation.StringRes;
-import androidx.lifecycle.ViewModelProvider;
 
 import com.example.peluqueria_app.R;
-import com.example.peluqueria_app.databinding.ActivityLoginBinding;
+import com.example.peluqueria_app.databinding.ActivityRegisterBinding;
 
-public class LoginActivity extends AppCompatActivity {
+
+public class RegisterActivity extends AppCompatActivity {
 
     private LoginViewModel loginViewModel;
 
-
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        com.example.peluqueria_app.databinding.ActivityLoginBinding binding = ActivityLoginBinding.inflate(getLayoutInflater());
+        // Get the Intent that started this activity and extract the string
+        Intent intent = getIntent();
+
+        com.example.peluqueria_app.databinding.ActivityRegisterBinding binding = ActivityRegisterBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         loginViewModel = new ViewModelProvider(this, new LoginViewModelFactory())
                 .get(LoginViewModel.class);
 
-        final EditText usernameEditText = binding.username;
-        final EditText passwordEditText = binding.password;
-        final Button loginButton = binding.botonLogin;
-        final Button registerButton= binding.registerButton;
+        final EditText usernameEditText = binding.editTextMail;
+        final EditText passwordEditText = binding.editTextMail;
+        final Button confirmarButton = binding.buttonConfirmar;
 
         loginViewModel.getLoginFormState().observe(this, loginFormState -> {
             if (loginFormState == null) {
                 return;
             }
-            assert loginButton != null;
-            loginButton.setEnabled(loginFormState.isDataValid());
+
+            confirmarButton.setEnabled(loginFormState.isDataValid());
             if (loginFormState.getUsernameError() != null) {
-                assert usernameEditText != null;
+
                 usernameEditText.setError(getString(loginFormState.getUsernameError()));
             }
             if (loginFormState.getPasswordError() != null) {
-                assert passwordEditText != null;
+
                 passwordEditText.setError(getString(loginFormState.getPasswordError()));
             }
         });
@@ -84,15 +84,14 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                assert usernameEditText != null;
-                assert passwordEditText != null;
+
                 loginViewModel.loginDataChanged(usernameEditText.getText().toString(),
                         passwordEditText.getText().toString());
             }
         };
-        assert usernameEditText != null;
+
         usernameEditText.addTextChangedListener(afterTextChangedListener);
-        assert passwordEditText != null;
+
         passwordEditText.addTextChangedListener(afterTextChangedListener);
         passwordEditText.setOnEditorActionListener((v, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_DONE) {
@@ -102,18 +101,12 @@ public class LoginActivity extends AppCompatActivity {
             return false;
         });
 
-        assert loginButton != null;
-        loginButton.setOnClickListener(v -> loginViewModel.login(usernameEditText.getText().toString(),
+        confirmarButton.setOnClickListener(v -> loginViewModel.login(usernameEditText.getText().toString(),
                 passwordEditText.getText().toString()));
 
-        assert registerButton != null;
-        registerButton.setOnClickListener(v -> {
-            Intent intent = new Intent(this, RegisterActivity.class);
-            startActivity(intent);
-        });
-
+        //Intent intent = new Intent(this, RegisterActivity.class);
+        //startActivity(intent);
     }
-
     private void updateUiWithUser(LoggedInUserView model) {
         String welcome = getString(R.string.welcome) + model.getDisplayName();
         // TODO : initiate successful logged in experience
@@ -124,4 +117,6 @@ public class LoginActivity extends AppCompatActivity {
         Toast.makeText(getApplicationContext(), errorString, Toast.LENGTH_SHORT).show();
     }
 
+
 }
+

@@ -14,7 +14,7 @@
         >
 
         <activity
-            android:name=".RegisterActivity"
+            android:name=".ui.login.RegisterActivity"
             android:exported="true"
             android:parentActivityName=".ui.login.LoginActivity"/>
 
