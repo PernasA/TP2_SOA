@@ -1,5 +1,6 @@
 package com.example.peluqueria_app.ui.login;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -7,15 +8,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.peluqueria_app.R;
 import com.example.peluqueria_app.presenters.RegisterPresenter;
 
 
-public class RegisterActivity extends AppCompatActivity {
+public class RegisterActivity extends Activity {
 
-    private LoginViewModel loginViewModel;
     RegisterPresenter presenter = new RegisterPresenter(this);
     private EditText usernameEditText;
     private EditText passwordEditText;
@@ -27,10 +25,8 @@ public class RegisterActivity extends AppCompatActivity {
 
         usernameEditText= findViewById(R.id.editTextMail);
         passwordEditText= findViewById(R.id.editTextPassword);
-        Button loginButton = findViewById(R.id.botonLogin);
-        loginButton.setOnClickListener(botonesListeners);
-        Button registerButton = findViewById(R.id.registerButton);
-        registerButton.setOnClickListener(botonesListeners);
+        Button confirmButton = findViewById(R.id.buttonConfirmar);
+        confirmButton.setOnClickListener(botonesListeners);
         Log.i("Ejecuto","Ejecuto onCreate");
 
     }
@@ -80,8 +76,6 @@ public class RegisterActivity extends AppCompatActivity {
         //Se determina que componente genero un evento
         switch (v.getId())
         {
-            //Si se ocurrio un evento en el boton OK
-            case R.id.botonLogin:
                 //se genera un Intent para poder lanzar la activity principal
                 //intent=new Intent(MainActivity.this,DialogActivity.class);
                 //Se le agrega al intent los parametros que se le quieren pasar a la activyt principal
@@ -89,7 +83,6 @@ public class RegisterActivity extends AppCompatActivity {
                 //intent.putExtra("textoOrigen",txtOrigen.getText().toString());
                 //se inicia la activity principal
                 //startActivity(intent);
-                break;
             case R.id.buttonConfirmar:
                 Toast.makeText(getApplicationContext(), "Se presionó confirmar", Toast.LENGTH_SHORT).show();
                 presenter.sendEmail(usernameEditText.getText().toString());
