@@ -9,7 +9,7 @@
 
 
     <EditText
-        android:id="@+id/editTextPassword"
+        android:id="@+id/editTextMail"
         android:layout_width="199dp"
         android:layout_height="48dp"
         android:layout_marginStart="8dp"
@@ -29,7 +29,7 @@
         tools:ignore="TextContrastCheck" />
 
     <EditText
-        android:id="@+id/editTextMail"
+        android:id="@+id/editTextPassword"
         android:layout_width="193dp"
         android:layout_height="48dp"
         android:layout_marginStart="8dp"

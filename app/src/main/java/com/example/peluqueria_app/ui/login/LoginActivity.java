@@ -23,11 +23,11 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        usernameEditText=(EditText)findViewById(R.id.username);
-        passwordEditText=(EditText)findViewById(R.id.password);
-        Button loginButton = (Button) findViewById(R.id.botonLogin);
+        usernameEditText= findViewById(R.id.username);
+        passwordEditText= findViewById(R.id.password);
+        final Button loginButton = findViewById(R.id.botonLogin);
         loginButton.setOnClickListener(botonesListeners);
-        Button registerButton = (Button) findViewById(R.id.registerButton);
+        final Button registerButton = findViewById(R.id.registerButton);
         registerButton.setOnClickListener(botonesListeners);
         Log.i("Ejecuto","Ejecuto onCreate");
 
@@ -76,10 +76,10 @@ public class LoginActivity extends AppCompatActivity {
         Intent intent;
 
         //Se determina que componente genero un evento
-        switch (v.getId())
-        {
+        switch (v.getId()) {
             //Si se ocurrio un evento en el boton OK
             case R.id.botonLogin:
+                Toast.makeText(getApplicationContext(), "Presionó el botón de login", Toast.LENGTH_LONG).show();
                 //se genera un Intent para poder lanzar la activity principal
                 //intent=new Intent(MainActivity.this,DialogActivity.class);
                 //Se le agrega al intent los parametros que se le quieren pasar a la activyt principal
@@ -93,9 +93,8 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(intent);
                 break;
             default:
-                Toast.makeText(getApplicationContext(),"Error en Listener de botones",Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Error en Listener de botones", Toast.LENGTH_LONG).show();
         }
-
 
     };
 }
