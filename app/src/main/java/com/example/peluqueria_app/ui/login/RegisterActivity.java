@@ -1,11 +1,6 @@
 package com.example.peluqueria_app.ui.login;
 
-import androidx.annotation.StringRes;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
-
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -14,8 +9,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.annotation.StringRes;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
+
 import com.example.peluqueria_app.R;
 import com.example.peluqueria_app.databinding.ActivityRegisterBinding;
+import com.example.peluqueria_app.presenters.RegisterPresenter;
 
 
 public class RegisterActivity extends AppCompatActivity {
@@ -25,9 +25,9 @@ public class RegisterActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        RegisterPresenter presenter = new RegisterPresenter(this);
         // Get the Intent that started this activity and extract the string
-        Intent intent = getIntent();
+        //Intent intent = getIntent();
 
         com.example.peluqueria_app.databinding.ActivityRegisterBinding binding = ActivityRegisterBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -101,8 +101,10 @@ public class RegisterActivity extends AppCompatActivity {
             return false;
         });
 
-        confirmarButton.setOnClickListener(v -> loginViewModel.login(usernameEditText.getText().toString(),
-                passwordEditText.getText().toString()));
+        confirmarButton.setOnClickListener(v -> {
+            Toast.makeText(getApplicationContext(), "Se presiono confirmar", Toast.LENGTH_SHORT).show();
+            presenter.sendEmail(usernameEditText.getText().toString());
+        });
 
         //Intent intent = new Intent(this, RegisterActivity.class);
         //startActivity(intent);
