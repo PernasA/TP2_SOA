@@ -17,7 +17,7 @@
         android:background="@color/white"
         android:hint="@string/ingrese_email"
         android:importantForAutofill="no"
-        android:inputType="textPassword"
+        android:inputType="textEmailAddress"
         android:selectAllOnFocus="true"
         android:textColorHint="#78909C"
         app:layout_constraintBottom_toBottomOf="parent"
