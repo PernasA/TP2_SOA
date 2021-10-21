@@ -8,16 +8,17 @@
         android:icon="@mipmap/ic_launcher_barber"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
-        android:supportsRtl="true"
-        android:theme="@style/Theme.PeluqueriaApp"
         android:screenOrientation="portrait"
-        >
-
+        android:supportsRtl="true"
+        android:theme="@style/Theme.PeluqueriaApp">
+        <activity
+            android:name=".ui.views.ConfirmCodeActivity"
+            android:exported="true"
+            android:parentActivityName=".ui.views.RegisterActivity"/>
         <activity
             android:name=".ui.views.RegisterActivity"
             android:exported="true"
-            android:parentActivityName=".ui.views.LoginActivity"/>
-
+            android:parentActivityName=".ui.views.LoginActivity" />
         <activity
             android:name=".ui.views.LoginActivity"
             android:exported="true"
@@ -25,6 +26,7 @@
             tools:ignore="LockedOrientationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

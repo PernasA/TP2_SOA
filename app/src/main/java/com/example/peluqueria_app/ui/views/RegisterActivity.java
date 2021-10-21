@@ -2,6 +2,7 @@ package com.example.peluqueria_app.ui.views;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -85,28 +86,26 @@ public class RegisterActivity extends Activity {
     private final View.OnClickListener botonesListeners = v -> {
         //Intent intent;
         //Se determina que componente genero un evento
-        switch (v.getId())
-        {
-                //se genera un Intent para poder lanzar la activity principal
-                //intent=new Intent(MainActivity.this,DialogActivity.class);
-                //Se le agrega al intent los parametros que se le quieren pasar a la activyt principal
-                //cuando se lanzado
-                //intent.putExtra("textoOrigen",txtOrigen.getText().toString());
-                //se inicia la activity principal
-                //startActivity(intent);
-            case R.id.buttonConfirmar:
-                int result = presenter.verificarCampos(usernameEditText.getText().toString(),passwordEditText.getText().toString(),nombreEditText.getText().toString(),apellidoEditText.getText().toString(),dniEditText.getText().toString());
-                if(result!=0){
-                    Toast.makeText(getApplicationContext(), listaErrores.get(result) , Toast.LENGTH_SHORT).show();
-                }else {
-                    Toast.makeText(getApplicationContext(), "Datos cargados correctamente", Toast.LENGTH_SHORT).show();
-                    presenter.sendEmail(usernameEditText.getText().toString());
-                }
-                //intent = new Intent(LoginActivity.this, RegisterActivity.class);
-                //startActivity(intent);
-                break;
-            default:
-                Toast.makeText(getApplicationContext(),"Error en Listener de botones",Toast.LENGTH_LONG).show();
+        //se genera un Intent para poder lanzar la activity principal
+        //intent=new Intent(MainActivity.this,DialogActivity.class);
+        //Se le agrega al intent los parametros que se le quieren pasar a la activyt principal
+        //cuando se lanzado
+        //intent.putExtra("textoOrigen",txtOrigen.getText().toString());
+        //se inicia la activity principal
+        //startActivity(intent);
+        if (v.getId() == R.id.buttonConfirmar) {
+            int result = presenter.verificarCampos(usernameEditText.getText().toString(), passwordEditText.getText().toString(), nombreEditText.getText().toString(), apellidoEditText.getText().toString(), dniEditText.getText().toString());
+            if (result == 0) {
+                Toast.makeText(getApplicationContext(), "Datos cargados correctamente", Toast.LENGTH_SHORT).show();
+                int codigo = presenter.sendEmail(usernameEditText.getText().toString());
+                Intent intent = new Intent(RegisterActivity.this, ConfirmCodeActivity.class);
+                intent.putExtra("datosRegistro", usernameEditText.getText().toString()+" " +passwordEditText.getText().toString()+ " "+ nombreEditText.getText().toString()+ " " +apellidoEditText.getText().toString()+" "+dniEditText.getText().toString()+" "+codigo);
+                startActivity(intent);
+            } else {
+                Toast.makeText(getApplicationContext(), listaErrores.get(result), Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            Toast.makeText(getApplicationContext(), "Error en Listener de botones", Toast.LENGTH_LONG).show();
         }
     };
 
@@ -120,6 +119,7 @@ public class RegisterActivity extends Activity {
         listaCampos.put(881, "La contraseña debe ser de más de 7 caracteres");
         listaCampos.put(882, "El mail es inválido");
         listaCampos.put(883, "El DNI es inválido");
+        listaCampos.put(884, "No se admiten espacios en ningun campo");
     }
 
 

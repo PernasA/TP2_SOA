@@ -9,6 +9,7 @@
     <string name="ingrese_email">Ingrese email</string>
     <string name="ingrese_apellido">Ingrese apellido</string>
     <string name="ingrese_dni">Ingrese DNI</string>
+    <string name="ingrese_codigo_confirmacion">Ingrese el codigo</string>
 
     //Botones
     <string name="action_sign_in">Iniciar sesión</string>
@@ -20,17 +21,21 @@
     <string name="login_failed">"Inicio de sesión fallido"</string>
 
     //Textos
+    <string name="prompt_email">"Mail"</string>
     <string name="welcome">"Bienvenido!"</string>
     <string name="aviso_email">A este mail enviaremos un código de confirmación</string>
     <string name="todavia_no_cuenta">¿Todavía no tenés cuenta?</string>
     <string name="ingresa_datos_registro">Ingresá tus datos\npara registrarte</string>
     <string name="aviso_confirmacion_registro">Al confirmar, le llegará un mail con un código de verificación</string>
     <string name="datos_personales">Datos personales</string>
+    <string name="info_envio">Enviamos un código de verificación al correo que ingresaste.</string>
+    <string name="ingresa_codigo">Ingresá tu código</string>
+    <string name="verifica_spam">No olvides chequear las carpetas "Spam" o "Correo no deseado.".</string>
+    <string name="verifica_mail">Si no te llega nada, volvé atrás y verificá que el mail esté correctamente escrito".</string>
 
     /////////////////////////////////////////////// AUTENTICACION
 
     /////////////////////////////////////////////// POOL
-
 
 
 </resources>

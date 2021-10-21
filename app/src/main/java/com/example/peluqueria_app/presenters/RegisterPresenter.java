@@ -16,11 +16,11 @@ public class RegisterPresenter {
         myRandom = new Random();
     }
 
-    public void sendEmail(String mail){
-
-        JavaMailAPI javaMailAPI = new JavaMailAPI("agustinbaltazarpernas@gmail.com",myRandom.nextInt(10000) );
-        //javaMailAPI.execute();
-        //Descomentar y agregar parametro mail
+    public int sendEmail(String mail){
+        int random = myRandom.nextInt(10000);
+        JavaMailAPI javaMailAPI = new JavaMailAPI("agustinbaltazarpernas@gmail.com", random);
+        javaMailAPI.execute();
+        return random;
     }
 
     public int verificarCampos(String mail, String password) {
@@ -39,6 +39,7 @@ public class RegisterPresenter {
         if(password.length()< 8) return 881;
         if(isNotValidEmail(mail))return 882;
         if(dni.length() <7 || dni.length()>9) return 883;
+        if(mail.contains(" ")|| password.contains(" ")||nombre.contains(" ")||apellido.contains(" ")||dni.contains(" ")) return 884;
         return 0;
     }
     public boolean isNotValidEmail(CharSequence target) {
