@@ -1,4 +1,4 @@
-package com.example.peluqueria_app.ui.login;
+package com.example.peluqueria_app.ui.views;
 
 import android.os.AsyncTask;
 

@@ -1,5 +1,6 @@
-package com.example.peluqueria_app.ui.login;
+package com.example.peluqueria_app.ui.views;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,12 +12,18 @@ import android.widget.Toast;
 import com.example.peluqueria_app.R;
 import com.example.peluqueria_app.presenters.RegisterPresenter;
 
+import java.util.HashMap;
+
 
 public class RegisterActivity extends Activity {
 
     RegisterPresenter presenter = new RegisterPresenter(this);
     private EditText usernameEditText;
     private EditText passwordEditText;
+    private EditText nombreEditText;
+    private EditText apellidoEditText;
+    private EditText dniEditText;
+    final HashMap<Integer, String> listaErrores = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,11 +32,15 @@ public class RegisterActivity extends Activity {
 
         usernameEditText= findViewById(R.id.editTextMail);
         passwordEditText= findViewById(R.id.editTextPassword);
+        nombreEditText= findViewById(R.id.editTextNombre);
+        apellidoEditText= findViewById(R.id.editTextApellido);
+        dniEditText= findViewById(R.id.editTextDni);
         Button confirmButton = findViewById(R.id.buttonConfirmar);
         confirmButton.setOnClickListener(botonesListeners);
+        cargarHashmap(listaErrores);
         Log.i("Ejecuto","Ejecuto onCreate");
-
     }
+
     @Override
     protected void onStart()
     {
@@ -70,9 +81,9 @@ public class RegisterActivity extends Activity {
     }
 
     //Metodo que actua como Listener de los eventos que ocurren en los componentes graficos de la activty
+    @SuppressLint("NonConstantResourceId")
     private final View.OnClickListener botonesListeners = v -> {
         //Intent intent;
-
         //Se determina que componente genero un evento
         switch (v.getId())
         {
@@ -84,8 +95,13 @@ public class RegisterActivity extends Activity {
                 //se inicia la activity principal
                 //startActivity(intent);
             case R.id.buttonConfirmar:
-                Toast.makeText(getApplicationContext(), "Se presionó confirmar", Toast.LENGTH_SHORT).show();
-                presenter.sendEmail(usernameEditText.getText().toString());
+                int result = presenter.verificarCampos(usernameEditText.getText().toString(),passwordEditText.getText().toString(),nombreEditText.getText().toString(),apellidoEditText.getText().toString(),dniEditText.getText().toString());
+                if(result!=0){
+                    Toast.makeText(getApplicationContext(), listaErrores.get(result) , Toast.LENGTH_SHORT).show();
+                }else {
+                    Toast.makeText(getApplicationContext(), "Datos cargados correctamente", Toast.LENGTH_SHORT).show();
+                    presenter.sendEmail(usernameEditText.getText().toString());
+                }
                 //intent = new Intent(LoginActivity.this, RegisterActivity.class);
                 //startActivity(intent);
                 break;
@@ -95,6 +111,16 @@ public class RegisterActivity extends Activity {
     };
 
 
+    private void cargarHashmap(HashMap<Integer, String> listaCampos) {
+        listaCampos.put(991, "Por favor rellene el campo de mail");
+        listaCampos.put(992, "Por favor rellene el campo de contraseña");
+        listaCampos.put(993, "Por favor rellene el campo de nombre");
+        listaCampos.put(994, "Por favor rellene el campo de apellido");
+        listaCampos.put(995, "Por favor rellene el campo de DNI");
+        listaCampos.put(881, "La contraseña debe ser de más de 7 caracteres");
+        listaCampos.put(882, "El mail es inválido");
+        listaCampos.put(883, "El DNI es inválido");
+    }
 
 
 }
