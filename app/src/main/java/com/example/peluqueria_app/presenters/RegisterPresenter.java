@@ -3,7 +3,7 @@ package com.example.peluqueria_app.presenters;
 import android.text.TextUtils;
 import android.util.Patterns;
 
-import com.example.peluqueria_app.ui.views.JavaMailAPI;
+import com.example.peluqueria_app.APIs.JavaMailAPI;
 import com.example.peluqueria_app.ui.views.RegisterActivity;
 
 import java.util.Random;
@@ -18,7 +18,7 @@ public class RegisterPresenter {
 
     public int sendEmail(String mail){
         int random = myRandom.nextInt(10000);
-        JavaMailAPI javaMailAPI = new JavaMailAPI("agustinbaltazarpernas@gmail.com", random);
+        JavaMailAPI javaMailAPI = new JavaMailAPI(mail, random);
         javaMailAPI.execute();
         return random;
     }

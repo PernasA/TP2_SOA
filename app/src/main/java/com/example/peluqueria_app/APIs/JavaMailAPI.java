@@ -1,4 +1,4 @@
-package com.example.peluqueria_app.ui.views;
+package com.example.peluqueria_app.APIs;
 
 import android.os.AsyncTask;
 
@@ -42,7 +42,7 @@ public class JavaMailAPI extends AsyncTask<Void, Void, Void> {
 
         MimeMessage mimeMessage = new MimeMessage(session);
         try {
-            mimeMessage.setFrom(new InternetAddress("coffeeline9@gmail.com"));
+            mimeMessage.setFrom(new InternetAddress("agustin.pernas.test@gmail.com"));
             mimeMessage.addRecipients(Message.RecipientType.TO, String.valueOf(new InternetAddress(email)));
             mimeMessage.setSubject(subject);
             mimeMessage.setText(message);

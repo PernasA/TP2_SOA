@@ -50,8 +50,8 @@
 
     <TextView
         android:id="@+id/textView1"
-        android:layout_width="344dp"
-        android:layout_height="105dp"
+        android:layout_width="348dp"
+        android:layout_height="66dp"
         android:background="#00FFFFFF"
         android:text="@string/info_envio"
         android:textColor="#FFFFFF"

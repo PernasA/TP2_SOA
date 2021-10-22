@@ -2,61 +2,56 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/black_strong"
-    android:backgroundTint="#000000"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context=".ui.views.LoginActivity"><![CDATA[@color/white"android:backgroundTint="@color/white"
-        android:inputType="textEmailAddress"
-        android:selectAllOnFocus="true"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    tools:context=".ui.views.LoginMailActivity">
 
-
-
-
-
-
-
-
-    ]]>
-
-    <EditText
-        android:id="@+id/username"
-        android:layout_width="200dp"
+    <Button
+        android:id="@+id/buttonEnviarMail"
+        android:layout_width="138dp"
         android:layout_height="48dp"
+        android:layout_gravity="start"
         android:background="@color/white"
-        android:hint="@string/ingrese_email"
-        android:importantForAutofill="no"
-        android:inputType="textEmailAddress"
-        android:textColorHint="#78909C"
+        android:backgroundTint="@color/red_light"
+        android:enabled="true"
+        android:text="@string/enviar_mail"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textColor="#757575"
+        app:icon="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.563" />
+        app:layout_constraintVertical_bias="0.649"
+        app:rippleColor="@color/teal_700"
+        tools:ignore="TextContrastCheck,TextContrastCheck,TextContrastCheck,TextContrastCheck,TextContrastCheck,TextContrastCheck,TextContrastCheck,TextContrastCheck,TextContrastCheck,TextContrastCheck,TextContrastCheck,TextContrastCheck,TextContrastCheck,TextContrastCheck" />
 
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="139dp"
+        android:layout_height="31dp"
+        android:background="#00FFFFFF"
+        android:text="@string/ingresa_email"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.503" />
 
     <EditText
-        android:id="@+id/password"
-        android:layout_width="200dp"
+        android:id="@+id/editTextMail"
+        android:layout_width="199dp"
         android:layout_height="48dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:background="@color/white"
-        android:hint="@string/ingrese_contraseña"
-        android:imeActionLabel="@string/action_sign_in_short"
-        android:imeOptions="actionDone"
         android:importantForAutofill="no"
-        android:inputType="textPassword"
+        android:inputType="textEmailAddress"
         android:selectAllOnFocus="true"
         android:textColorHint="#78909C"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -64,83 +59,63 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.664" />
+        app:layout_constraintVertical_bias="0.563"
+        tools:ignore="TextContrastCheck" />
 
-    <Button
-        android:id="@+id/botonLogin"
-        android:layout_width="138dp"
+    <EditText
+        android:id="@+id/editTextConfirmationCode"
+        android:layout_width="199dp"
         android:layout_height="48dp"
-        android:layout_gravity="start"
-        android:layout_marginBottom="164dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
         android:background="@color/white"
-        android:backgroundTint="@color/red_light"
-        android:enabled="true"
-        android:text="@string/action_sign_in"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textColor="#757575"
-        app:icon="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:rippleColor="@color/teal_700"
-        tools:ignore="TextContrastCheck,TextContrastCheck,TextContrastCheck,TextContrastCheck,TextContrastCheck,TextContrastCheck,TextContrastCheck,TextContrastCheck,TextContrastCheck,TextContrastCheck,TextContrastCheck,TextContrastCheck,TextContrastCheck,TextContrastCheck" />
-
-    <Button
-        android:id="@+id/registerButton"
-        android:layout_width="138dp"
-        android:layout_height="48dp"
-        android:layout_gravity="start"
-        android:layout_marginTop="16dp"
-        android:background="@color/white"
-        android:backgroundTint="@color/red_light"
-        android:enabled="true"
-        android:text="@string/action_regiser"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textColor="#757575"
-        app:icon="@color/white"
+        android:importantForAutofill="no"
+        android:inputType="text|number"
+        android:selectAllOnFocus="true"
+        android:textColorHint="#78909C"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.952"
+        app:layout_constraintVertical_bias="0.861"
+        tools:ignore="TextContrastCheck,SpeakableTextPresentCheck" />
+
+    <Button
+        android:id="@+id/buttonConfirmar"
+        android:layout_width="138dp"
+        android:layout_height="48dp"
+        android:layout_gravity="start"
+        android:background="@color/white"
+        android:backgroundTint="@color/red_light"
+        android:enabled="true"
+        android:text="@string/confirmar2"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textColor="#757575"
+        app:icon="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.955"
         app:rippleColor="@color/teal_700"
         tools:ignore="TextContrastCheck,TextContrastCheck,TextContrastCheck,TextContrastCheck,TextContrastCheck,TextContrastCheck,TextContrastCheck,TextContrastCheck,TextContrastCheck,TextContrastCheck,TextContrastCheck,TextContrastCheck,TextContrastCheck,TextContrastCheck" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="20dp" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="20dp" />
-
-    <androidx.constraintlayout.widget.Barrier
-        android:id="@+id/barrier2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:barrierDirection="left" />
 
     <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/textView2"
+        android:layout_width="148dp"
+        android:layout_height="37dp"
         android:background="#00FFFFFF"
-        android:text="@string/todavia_no_cuenta"
+        android:text="@string/ingresa_codigo"
         android:textColor="#FFFFFF"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.518"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.866" />
+        app:layout_constraintVertical_bias="0.801" />
 
     <TextView
         android:id="@+id/textView4"
@@ -169,4 +144,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.06" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

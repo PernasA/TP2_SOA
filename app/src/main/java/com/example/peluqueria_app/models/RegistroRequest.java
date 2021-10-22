@@ -1,4 +1,4 @@
-package Models;
+package com.example.peluqueria_app.models;
 
 public class RegistroRequest {
 

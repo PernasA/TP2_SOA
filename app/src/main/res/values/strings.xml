@@ -10,7 +10,7 @@
     <string name="ingrese_apellido">Ingrese apellido</string>
     <string name="ingrese_dni">Ingrese DNI</string>
     <string name="ingrese_codigo_confirmacion">Ingrese el codigo</string>
-
+    <string name="ingresa_email">Ingresá tu email</string>
     //Botones
     <string name="action_sign_in">Iniciar sesión</string>
     <string name="action_sign_in_short">Iniciar sesión</string>
@@ -32,6 +32,10 @@
     <string name="ingresa_codigo">Ingresá tu código</string>
     <string name="verifica_spam">No olvides chequear las carpetas "Spam" o "Correo no deseado.".</string>
     <string name="verifica_mail">Si no te llega nada, volvé atrás y verificá que el mail esté correctamente escrito".</string>
+    <string name="confirmar2">Confirmar</string>
+    <string name="enviar_mail">Enviar Mail</string>
+    <string name="ingresa_mail_confirmacion">Ingresá un mail donde llegará un código de confirmación</string>
+    <string name="barberia_title">La Barbería</string>
 
     /////////////////////////////////////////////// AUTENTICACION
 
