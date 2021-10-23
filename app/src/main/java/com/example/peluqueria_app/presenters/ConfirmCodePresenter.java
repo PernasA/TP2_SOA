@@ -3,6 +3,8 @@ package com.example.peluqueria_app.presenters;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import androidx.annotation.NonNull;
+
 import com.example.peluqueria_app.APIs.RetrofitAPI;
 import com.example.peluqueria_app.Utils.ConnectionController;
 import com.example.peluqueria_app.Utils.SessionInfo;
@@ -37,8 +39,6 @@ public class ConfirmCodePresenter {
         apellido = datosRegistroSeparado[3];
         dni = datosRegistroSeparado[4];
         code = datosRegistroSeparado[5];
-        System.out.println("MAIL: "+mail);
-        System.out.println("CODIGO: "+code);
     }
 
     public boolean verificarCodigo(String codigo) {
@@ -49,18 +49,18 @@ public class ConfirmCodePresenter {
         return ConnectionController.checkConnection(applicationContext);
     }
 
-    public String subirInformacion() {
+    public void subirInformacion(Context context) {
             Retrofit retrofit = new Retrofit.Builder()
                     .baseUrl("http://so-unlam.net.ar/")
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
             RetrofitAPI rfApi = retrofit.create(RetrofitAPI.class);
-            RegistroRequest dr = new RegistroRequest(nombre, apellido, Integer.valueOf(dni), mail, password, 2900, 6);
+            RegistroRequest dr = new RegistroRequest(nombre, apellido, Integer.parseInt(dni), mail, password, 2900, 6);
             Call<APIResponse> call = rfApi.postRegister(dr);
             call.enqueue(new Callback<APIResponse>() {
 
                 @Override
-                public void onResponse(Call<APIResponse> call, Response<APIResponse> response) {
+                public void onResponse(@NonNull Call<APIResponse> call, @NonNull Response<APIResponse> response) {
 
                     APIResponse reg = response.body();
                     int code = response.code();
@@ -69,20 +69,21 @@ public class ConfirmCodePresenter {
 
                         mensajeRespuesta = "Registro completado";
 
+                        assert reg != null;
                         SessionInfo.authToken = reg.getToken();
                         SessionInfo.refreshToken = reg.getToken_refresh();
-                        SharedPreferences sharedp = getSharedPreferences("log", Context.MODE_PRIVATE);
+                        SharedPreferences sharedp = context.getSharedPreferences("registroSharedPreferences", Context.MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedp.edit();
                         editor.putInt(mail, 1);
-                        editor.commit();
-
+                        editor.apply();
+                        activity.response(mensajeRespuesta);
                     } else {
                         try {
+                            assert response.errorBody() != null;
                             JSONObject json =new JSONObject(response.errorBody().string());
                             mensajeRespuesta = json.get("msg").toString();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        } catch (JSONException e) {
+                            activity.response(mensajeRespuesta);
+                        } catch (IOException | JSONException e) {
                             e.printStackTrace();
                         }
                     }
@@ -90,13 +91,14 @@ public class ConfirmCodePresenter {
                 }
 
                 @Override
-                public void onFailure(Call<APIResponse> call, Throwable t) {
+                public void onFailure(@NonNull Call<APIResponse> call, @NonNull Throwable t) {
                     mensajeRespuesta = "Error al conectarse a la API";
+                    activity.response(mensajeRespuesta);
                 }
             });
 
-            return mensajeRespuesta;
+
         }
 
-    }
+
 }

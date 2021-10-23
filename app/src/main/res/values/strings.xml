@@ -36,6 +36,8 @@
     <string name="enviar_mail">Enviar Mail</string>
     <string name="ingresa_mail_confirmacion">Ingresá un mail donde llegará un código de confirmación</string>
     <string name="barberia_title">La Barbería</string>
+    <string name="espacio" />
+    <string name="obj_switch">Switch</string>
 
     /////////////////////////////////////////////// AUTENTICACION
 

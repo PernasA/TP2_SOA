@@ -2,7 +2,6 @@ package com.example.peluqueria_app.ui.views;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -87,20 +86,18 @@ public class LoginMailActivity extends Activity {
                 } else
                     Toast.makeText(getApplicationContext(), presenter.verificarCampos(mailEditText.getText().toString()), Toast.LENGTH_SHORT).show();
             }else{
-            AlertDialog ad = new AlertDialog.Builder(LoginMailActivity.this).setTitle("Error de conexión")
+             new AlertDialog.Builder(LoginMailActivity.this).setTitle("Error de conexión")
                     .setMessage("Verifique conexión a internet y vuelva a iniciar la aplicación")
-                    .setPositiveButton("Salir", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            finish();
-                            //LoginMailActivity.returnInstance().finish();
-                        }
+                    .setPositiveButton("Salir", (dialog, which) -> {
+                        finish();
+                        //LoginMailActivity.returnInstance().finish();
                     }).show();
         }
             } else if (v.getId() == R.id.buttonConfirmar) {
                 if(presenter.codigoValido(codigoEditText.getText().toString())) {
                     Intent intent = new Intent(com.example.peluqueria_app.ui.views.LoginMailActivity.this, LoginActivity.class);
                     startActivity(intent);
+                    finish();
                 }else Toast.makeText(getApplicationContext(), "Código de verificación incorrecto" , Toast.LENGTH_SHORT).show();
             } else Toast.makeText(getApplicationContext(), "Error en Listener de botones", Toast.LENGTH_LONG).show();
         };

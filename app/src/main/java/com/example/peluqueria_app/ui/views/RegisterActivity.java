@@ -1,7 +1,6 @@
 package com.example.peluqueria_app.ui.views;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,13 +9,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.peluqueria_app.R;
 import com.example.peluqueria_app.presenters.RegisterPresenter;
 
 import java.util.HashMap;
 
 
-public class RegisterActivity extends Activity {
+public class RegisterActivity extends AppCompatActivity {
 
     RegisterPresenter presenter = new RegisterPresenter(this);
     private EditText usernameEditText;
@@ -84,15 +85,6 @@ public class RegisterActivity extends Activity {
     //Metodo que actua como Listener de los eventos que ocurren en los componentes graficos de la activty
     @SuppressLint("NonConstantResourceId")
     private final View.OnClickListener botonesListeners = v -> {
-        //Intent intent;
-        //Se determina que componente genero un evento
-        //se genera un Intent para poder lanzar la activity principal
-        //intent=new Intent(MainActivity.this,DialogActivity.class);
-        //Se le agrega al intent los parametros que se le quieren pasar a la activyt principal
-        //cuando se lanzado
-        //intent.putExtra("textoOrigen",txtOrigen.getText().toString());
-        //se inicia la activity principal
-        //startActivity(intent);
         if (v.getId() == R.id.buttonConfirmar) {
             int result = presenter.verificarCampos(usernameEditText.getText().toString(), passwordEditText.getText().toString(), nombreEditText.getText().toString(), apellidoEditText.getText().toString(), dniEditText.getText().toString());
             if (result == 0) {

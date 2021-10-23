@@ -1,11 +1,12 @@
 package com.example.peluqueria_app.ui.views;
 
 import android.app.AlertDialog;
-import android.content.DialogInterface;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -19,8 +20,8 @@ public class ConfirmCodeActivity extends AppCompatActivity {
 
     ConfirmCodePresenter presenter = new ConfirmCodePresenter(this);
     private EditText codeEditText;
-    private String datosRegistro;
     AlertDialog alertDialog;
+    Button confirmButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +29,7 @@ public class ConfirmCodeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_confirm_code);
         codeEditText= findViewById(R.id.editTextConfirmationCode);
 
-        Button confirmButton = findViewById(R.id.buttonConfirmar);
+        confirmButton = findViewById(R.id.buttonConfirmar);
         confirmButton.setOnClickListener(botonesListeners);
         Log.i("Ejecuto","Ejecuto onCreate");
 
@@ -79,46 +80,47 @@ public class ConfirmCodeActivity extends AppCompatActivity {
         Log.i("Ejecuto","Ejecuto OnDestroy");
     }
 
-    //Metodo que actua como Listener de los eventos que ocurren en los componentes graficos de la activty
-
     private final View.OnClickListener botonesListeners = v -> {
-        //Intent intent;
-        //Se determina que componente genero un evento
         if (v.getId() == R.id.buttonConfirmar) {
+            confirmButton.setEnabled(false);
+            View view = this.getCurrentFocus();
+            if (view != null) {
+                InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+            }
             if(presenter.hayConeccion(getApplicationContext())) {
                 if(presenter.verificarCodigo(codeEditText.getText().toString())){
-                    String resultado = presenter.subirInformacion();
-                    Toast.makeText(getApplicationContext(), resultado, Toast.LENGTH_SHORT).show();
-
-                    if(resultado.equals("Registro completado")) {
-                        alertDialog = new AlertDialog.Builder(ConfirmCodeActivity.this)
-                                .setTitle("Registro de actividades")
-                                .setMessage("Este es su primer logueo en la aplicacion")
-                                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        LoginActivity.returnInstance().finish();
-                                        Intent sig = new Intent(ConfirmCodeActivity.this, LoginActivity.class);
-                                        startActivity(sig);
-                                        finish();
-                                    }
-                                })
-                                .show();
-                    }
+                    presenter.subirInformacion(this);
                 }else Toast.makeText(getApplicationContext(), "Código de verificación incorrecto" , Toast.LENGTH_SHORT).show();
             }else {
-    alertDialog = new AlertDialog.Builder(ConfirmCodeActivity.this).setTitle("Error de conexión")
-                        .setMessage("Verifique conexión a internet y vuelva a iniciar la aplicación")
-                        .setPositiveButton("Salir", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                finish();
-                                //getActivity().finish();
-                            }
+                        alertDialog = new AlertDialog.Builder(ConfirmCodeActivity.this).setTitle("Error de conexión")
+                        .setMessage("Verifique la conexión a internet y vuelva a iniciar la aplicación")
+                        .setPositiveButton("Salir", (dialog, which) -> {
+                            finish();
+                            //getActivity().finish();
                         }).show();
             }
         } else {
             Toast.makeText(getApplicationContext(), "Error en Listener de botones", Toast.LENGTH_LONG).show();
         }
     };
+
+    public void response(String mensajeRespuesta) {
+        Toast.makeText(getApplicationContext(), mensajeRespuesta, Toast.LENGTH_SHORT).show();
+        confirmButton.setEnabled(true);
+        if(mensajeRespuesta.equals("Registro completado")) {
+            alertDialog = new AlertDialog.Builder(ConfirmCodeActivity.this)
+                    .setTitle("Registro de actividades")
+                    .setMessage("Este es su primer logueo en la aplicacion")
+                    .setPositiveButton("OK", (dialog, which) -> {
+                        //LoginActivity.returnInstance().finish();
+                        Intent intent = new Intent(ConfirmCodeActivity.this, LoginActivity.class);
+                        startActivity(intent);
+                        finish();
+                    })
+                    .show();
+        }else{
+            Toast.makeText(getApplicationContext(), "Vuelva a ingresar los datos por favor", Toast.LENGTH_SHORT).show();
+        }
+    }
 }

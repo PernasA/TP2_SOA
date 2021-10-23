@@ -11,7 +11,9 @@
         android:screenOrientation="portrait"
         android:supportsRtl="true"
         android:theme="@style/Theme.PeluqueriaApp">
-
+        <activity
+            android:name=".ui.views.HomeActivity"
+            android:exported="true" />
         <activity
             android:name=".ui.views.ConfirmCodeActivity"
             android:exported="true"
@@ -22,14 +24,12 @@
             android:parentActivityName=".ui.views.LoginActivity" />
         <activity
             android:name=".ui.views.LoginActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ui.views.LoginMailActivity"
             android:exported="true"
-/>
-            <activity
-                android:name=".ui.views.LoginMailActivity"
-                android:exported="true"
-                android:label="@string/app_name"
-                tools:ignore="LockedOrientationActivity"
-                >
+            android:label="@string/app_name"
+            tools:ignore="LockedOrientationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
