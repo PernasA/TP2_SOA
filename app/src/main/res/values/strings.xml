@@ -37,8 +37,9 @@
     <string name="ingresa_mail_confirmacion">Ingresá un mail donde llegará un código de confirmación</string>
     <string name="barberia_title">La Barbería</string>
     <string name="espacio" />
-    <string name="obj_switch">Switch</string>
-
+    <string name="obj_switch_luz">Brillo automático</string>
+    <string name="obj_switch_pantalla">Apagado de pantalla automático</string>
+    <string name="info">Info</string>
     /////////////////////////////////////////////// AUTENTICACION
 
     /////////////////////////////////////////////// POOL
