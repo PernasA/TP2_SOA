@@ -52,8 +52,6 @@ public class LoginPresenter {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         RetrofitAPI rfApi = rf.create(RetrofitAPI.class);
-        System.out.println("Mail: "+mail);
-        System.out.println("Password: "+password);
         LoginRequest lr = new LoginRequest(mail, password);
         Call<APIResponse> call = rfApi.postLogin(lr);
         call.enqueue(new Callback<APIResponse>() {
@@ -61,8 +59,6 @@ public class LoginPresenter {
             @Override
             public void onResponse(@NonNull Call<APIResponse> call, @NonNull Response<APIResponse> response) {
                 int cant;
-                System.out.println("Codigo respuesta: "+response.code());
-                System.out.println("Estoy en el response");
                 if(response.code() == 200) {
                     mensajeRespuesta = "Login exitoso";
                     SharedPreferences sp = context.getSharedPreferences("registroSharedPreferences", Context.MODE_PRIVATE);
@@ -74,7 +70,7 @@ public class LoginPresenter {
                     assert ar != null;
                     SessionInfo.authToken = ar.getToken();
                     SessionInfo.refreshToken = ar.getToken_refresh();
-                    postEv();
+                    registrarLoginApi();
                 } else {
                     mensajeRespuesta = "Usuario y/o contraseña incorrectos";
                     cant = -1;
@@ -90,7 +86,7 @@ public class LoginPresenter {
         });
     }
 
-    private void postEv() {
+    private void registrarLoginApi() { //Luego de que lo encuentro guardo esa informacion en el server.
         HashMap<String, String> headers = new HashMap<>();
         headers.put("Content-Type", "application/json");
         headers.put("Authorization", "Bearer " + SessionInfo.authToken);

@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PeluqueriaApp">
         <activity
+            android:name=".ui.views.FinishActivity"
+            android:exported="true" />
+        <activity
             android:name=".ui.views.HomeActivity"
             android:exported="true" />
         <activity

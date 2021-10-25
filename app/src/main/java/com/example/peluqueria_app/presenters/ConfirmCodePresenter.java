@@ -6,7 +6,7 @@ import android.content.SharedPreferences;
 import androidx.annotation.NonNull;
 
 import com.example.peluqueria_app.APIs.RetrofitAPI;
-import com.example.peluqueria_app.Utils.ConnectionController;
+import com.example.peluqueria_app.Utils.ControladorConeccion;
 import com.example.peluqueria_app.Utils.SessionInfo;
 import com.example.peluqueria_app.models.APIResponse;
 import com.example.peluqueria_app.models.RegistroRequest;
@@ -46,7 +46,7 @@ public class ConfirmCodePresenter {
     }
 
     public boolean hayConeccion(Context applicationContext) {
-        return ConnectionController.checkConnection(applicationContext);
+        return ControladorConeccion.checkConnection(applicationContext);
     }
 
     public void subirInformacion(Context context) {

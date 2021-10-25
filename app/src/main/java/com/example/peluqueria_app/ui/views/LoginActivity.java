@@ -12,7 +12,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.peluqueria_app.R;
-import com.example.peluqueria_app.Utils.ConnectionController;
+import com.example.peluqueria_app.Utils.ControladorConeccion;
 import com.example.peluqueria_app.presenters.LoginPresenter;
 
 import java.util.HashMap;
@@ -91,7 +91,7 @@ public class LoginActivity extends Activity {
             case R.id.botonLogin:
                 int result = presenter.verificarCampos(usernameEditText.getText().toString(),passwordEditText.getText().toString());
                 if(result == 0) {
-                    if (ConnectionController.checkConnection(getApplicationContext())) {
+                    if (ControladorConeccion.checkConnection(getApplicationContext())) {
                         registerButton.setEnabled(false);
                         loginButton.setEnabled(false);
                         presenter.buscarUsuario(this);

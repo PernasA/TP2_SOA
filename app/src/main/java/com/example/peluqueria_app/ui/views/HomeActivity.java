@@ -3,7 +3,6 @@ package com.example.peluqueria_app.ui.views;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
@@ -13,7 +12,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.peluqueria_app.R;
-import com.example.peluqueria_app.presenters.CronometroPresenter;
+import com.example.peluqueria_app.presenters.HomePresenter;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -22,8 +21,8 @@ public class HomeActivity extends AppCompatActivity {
      Switch switchLuz;
      @SuppressLint("UseSwitchCompatOrMaterialCode")
      Switch switchPantalla;
-    Handler handler;
 
+HomePresenter homePresenter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,14 +35,12 @@ public class HomeActivity extends AppCompatActivity {
 
         switchLuz = findViewById(R.id.switch1);
         switchLuz.setOnClickListener(botonesListeners);
-
-         switchPantalla = findViewById(R.id.switch2);
+        switchPantalla = findViewById(R.id.switch2);
         switchPantalla.setOnClickListener(botonesListeners);
 
-        handler = new Handler();
-        Runnable cronometro = new CronometroPresenter(this.handler, this);
-        Thread t = new Thread(cronometro);
-        t.start();
+        homePresenter = new HomePresenter(this);
+        homePresenter.inicializarCronometro();
+
     }
 
     @Override

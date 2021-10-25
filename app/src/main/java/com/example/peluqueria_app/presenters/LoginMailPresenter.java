@@ -5,7 +5,7 @@ import android.text.TextUtils;
 import android.util.Patterns;
 
 import com.example.peluqueria_app.APIs.JavaMailAPI;
-import com.example.peluqueria_app.Utils.ConnectionController;
+import com.example.peluqueria_app.Utils.ControladorConeccion;
 import com.example.peluqueria_app.ui.views.LoginMailActivity;
 
 import java.util.Random;
@@ -46,6 +46,6 @@ public class LoginMailPresenter {
     }
 
     public boolean hayConeccion(Context applicationContext) {
-        return ConnectionController.checkConnection(applicationContext);
+        return ControladorConeccion.checkConnection(applicationContext);
     }
 }
