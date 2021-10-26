@@ -95,10 +95,7 @@ public class ConfirmCodeActivity extends AppCompatActivity {
             }else {
                         alertDialog = new AlertDialog.Builder(ConfirmCodeActivity.this).setTitle("Error de conexión")
                         .setMessage("Verifique la conexión a internet y vuelva a iniciar la aplicación")
-                        .setPositiveButton("Salir", (dialog, which) -> {
-                            finish();
-                            //getActivity().finish();
-                        }).show();
+                        .setPositiveButton("Salir", (dialog, which) -> finish()).show();
             }
         } else {
             Toast.makeText(getApplicationContext(), "Error en Listener de botones", Toast.LENGTH_LONG).show();
@@ -113,7 +110,6 @@ public class ConfirmCodeActivity extends AppCompatActivity {
                     .setTitle("Registro de actividades")
                     .setMessage("Este es su primer logueo en la aplicacion")
                     .setPositiveButton("OK", (dialog, which) -> {
-                        //LoginActivity.returnInstance().finish();
                         Intent intent = new Intent(ConfirmCodeActivity.this, LoginActivity.class);
                         startActivity(intent);
                         finish();

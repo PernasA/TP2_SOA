@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
+import android.os.BatteryManager;
 import com.example.peluqueria_app.R;
 import com.example.peluqueria_app.presenters.LoginMailPresenter;
 
@@ -42,6 +42,11 @@ public class LoginMailActivity extends Activity {
         {
             Log.i("Ejecuto","Ejecuto Onstart");
             super.onStart();
+            // Call battery manager service
+            BatteryManager bm = (BatteryManager) this.getSystemService(BATTERY_SERVICE);
+            // Get the battery percentage and store it in a INT variable
+            int batLevel = bm.getIntProperty(BatteryManager.BATTERY_PROPERTY_CAPACITY);
+            Toast.makeText(this,"Su batería es del: "+batLevel+"%",Toast.LENGTH_LONG).show();
         }
 
         @Override

@@ -2,6 +2,7 @@ package com.example.peluqueria_app.presenters;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.BatteryManager;
 import android.text.TextUtils;
 import android.util.Patterns;
 
@@ -13,6 +14,7 @@ import com.example.peluqueria_app.models.APIResponse;
 import com.example.peluqueria_app.models.EventRequest;
 import com.example.peluqueria_app.models.EventResponse;
 import com.example.peluqueria_app.models.LoginRequest;
+import com.example.peluqueria_app.ui.views.ConfirmCodeActivity;
 import com.example.peluqueria_app.ui.views.LoginActivity;
 
 import java.util.HashMap;
@@ -58,14 +60,21 @@ public class LoginPresenter {
 
             @Override
             public void onResponse(@NonNull Call<APIResponse> call, @NonNull Response<APIResponse> response) {
-                int cant;
+                int cant,cantBateria;
                 if(response.code() == 200) {
                     mensajeRespuesta = "Login exitoso";
-                    SharedPreferences sp = context.getSharedPreferences("registroSharedPreferences", Context.MODE_PRIVATE);
-                    SharedPreferences.Editor editor = sp.edit();
-                    editor.putInt(mail, sp.getInt(mail, 0) + 1);
+                    SharedPreferences sharedPreferences = context.getSharedPreferences("registroSharedPreferences", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putInt(mail, sharedPreferences.getInt(mail, 0) + 1);
+
+                    BatteryManager bm = (BatteryManager) activity.getSystemService(ConfirmCodeActivity.BATTERY_SERVICE);
+                    int batLevel = bm.getIntProperty(BatteryManager.BATTERY_PROPERTY_CAPACITY);
+                    if(batLevel < 50)editor.putInt(mail+"1", sharedPreferences.getInt(mail+"1", 0) + 1);
+
+                    cant = sharedPreferences.getInt(mail,0);
+                    cantBateria = sharedPreferences.getInt(mail+"1",0);
+
                     editor.apply();
-                    cant = sp.getInt(mail,0);
                     APIResponse ar = response.body();
                     assert ar != null;
                     SessionInfo.authToken = ar.getToken();
@@ -74,19 +83,20 @@ public class LoginPresenter {
                 } else {
                     mensajeRespuesta = "Usuario y/o contraseña incorrectos";
                     cant = -1;
+                    cantBateria=-1;
                 }
-                activity.response(mensajeRespuesta,cant);
+                activity.response(mensajeRespuesta,cant,cantBateria);
             }
 
             @Override
             public void onFailure(@NonNull Call<APIResponse> call, @NonNull Throwable t) {
                 mensajeRespuesta = "Error en el login. Intente en otro momento";
-                activity.response(mensajeRespuesta,-1);
+                activity.response(mensajeRespuesta,-1,-1);
             }
         });
     }
 
-    private void registrarLoginApi() { //Luego de que lo encuentro guardo esa informacion en el server.
+    private void registrarLoginApi() { //Luego que lo encuentro guardo esa informacion en el server.
         HashMap<String, String> headers = new HashMap<>();
         headers.put("Content-Type", "application/json");
         headers.put("Authorization", "Bearer " + SessionInfo.authToken);

@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.peluqueria_app">
-
+<uses-feature android:name="android.hardware.Sensor.acelerometer" android:required="true"/>
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher_barber"
@@ -40,5 +40,7 @@
             </intent-filter>
         </activity>
     </application>
+    <uses-permission android:name="android.permission.WRITE_SETTINGS"
+        tools:ignore="ManifestOrder,ProtectedPermissions"/>
 
 </manifest>

@@ -1,8 +1,8 @@
 package com.example.peluqueria_app.ui.views;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -83,6 +83,7 @@ public class LoginActivity extends Activity {
     }
 
     //Metodo que actua como Listener de los eventos que ocurren en los componentes graficos de la activty
+    @SuppressLint("NonConstantResourceId")
     private final View.OnClickListener botonesListeners = v -> {
         Intent intent;
         //Se determina que componente genero un evento
@@ -98,12 +99,7 @@ public class LoginActivity extends Activity {
                     } else {
                         new AlertDialog.Builder(LoginActivity.this).setTitle("Error de conexión")
                                 .setMessage("Verifique conexión a internet y vuelva a iniciar la aplicación")
-                                .setPositiveButton("Salir", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        finish();
-                                    }
-                                })
+                                .setPositiveButton("Salir", (dialog, which) -> finish())
                                 .show();
                     }
                 }else Toast.makeText(getApplicationContext(), listaErrores.get(result), Toast.LENGTH_SHORT).show();
@@ -118,20 +114,17 @@ public class LoginActivity extends Activity {
 
     };
 
-    public void response(String mensajeRespuesta,int cant) {
+    public void response(String mensajeRespuesta,int cant, int cantBateria) {
         Toast.makeText(getApplicationContext(), mensajeRespuesta, Toast.LENGTH_SHORT).show();
         registerButton.setEnabled(true);
         loginButton.setEnabled(true);
         if(mensajeRespuesta.equals("Login exitoso")) {
             new AlertDialog.Builder(LoginActivity.this).setTitle("Registro de actividad")
-                    .setMessage("Usted se ha logueado " + cant + " veces en la aplicacion")
-                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            Intent sig = new Intent(LoginActivity.this, HomeActivity.class);
-                            startActivity(sig);
-                            finish();
-                        }
+                    .setMessage("Usted se ha logueado " + cant + " veces en la aplicacion. Las veces que se inicializó con menos de 50% de batería son: "+cantBateria)
+                    .setPositiveButton("OK", (dialog, which) -> {
+                        Intent sig = new Intent(LoginActivity.this, HomeActivity.class);
+                        startActivity(sig);
+                        finish();
                     })
                     .show();
         }else{

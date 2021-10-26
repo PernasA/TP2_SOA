@@ -38,8 +38,14 @@
     <string name="barberia_title">La Barbería</string>
     <string name="espacio" />
     <string name="obj_switch_luz">Brillo automático</string>
-    <string name="obj_switch_pantalla">Apagado de pantalla automático</string>
+    <string name="obj_switch_pantalla">Mensajes a Whatsapp automáticos</string>
     <string name="info">Info</string>
+    <string name="quienes_somos">Quiénes somos</string>
+    <string name="descripcion_barberia">Somos una barbería ubicada en la Villa de Merlo. Nos encanta esta profesión que comenzamos hace ya varios años y en la que tanto nos perfeccionamos día a día</string>
+    <string name="descripcion_barberia2">Contacto: \nWhatsapp: 11 99991111\nMail: barberia@gmail.com</string>
+    <string name="precios">Precios</string>
+    <string name="barberia_precios">Corte pelo: $500\nCorte barba: $400 \nPelo+barba: $800 \nTeñido: $1.200 \nCerveza: $200</string>
+    <string name="barberia_precios2">Corte pelo: $500 \nCorte barba: $400 \nPelo+barba: $800  </string>
     /////////////////////////////////////////////// AUTENTICACION
 
     /////////////////////////////////////////////// POOL

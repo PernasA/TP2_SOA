@@ -2,8 +2,11 @@ package com.example.peluqueria_app.presenters;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.BatteryManager;
+import android.os.Build;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 
 import com.example.peluqueria_app.APIs.RetrofitAPI;
 import com.example.peluqueria_app.Utils.ControladorConeccion;
@@ -24,9 +27,11 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ConfirmCodePresenter {
+
     final ConfirmCodeActivity activity;
     String nombre,apellido ,mail,password,dni,code;
     String mensajeRespuesta= "";
+
     public ConfirmCodePresenter(ConfirmCodeActivity activity){
         this.activity = activity;
     }
@@ -55,10 +60,11 @@ public class ConfirmCodePresenter {
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
             RetrofitAPI rfApi = retrofit.create(RetrofitAPI.class);
-            RegistroRequest dr = new RegistroRequest(nombre, apellido, Integer.parseInt(dni), mail, password, 2900, 6);
-            Call<APIResponse> call = rfApi.postRegister(dr);
+            RegistroRequest registroRequest = new RegistroRequest(nombre, apellido, Integer.parseInt(dni), mail, password, 2900, 6);
+            Call<APIResponse> call = rfApi.postRegister(registroRequest);
             call.enqueue(new Callback<APIResponse>() {
 
+                @RequiresApi(api = Build.VERSION_CODES.M)
                 @Override
                 public void onResponse(@NonNull Call<APIResponse> call, @NonNull Response<APIResponse> response) {
 
@@ -66,15 +72,20 @@ public class ConfirmCodePresenter {
                     int code = response.code();
 
                     if(code == 200) {
-
                         mensajeRespuesta = "Registro completado";
-
                         assert reg != null;
                         SessionInfo.authToken = reg.getToken();
                         SessionInfo.refreshToken = reg.getToken_refresh();
-                        SharedPreferences sharedp = context.getSharedPreferences("registroSharedPreferences", Context.MODE_PRIVATE);
-                        SharedPreferences.Editor editor = sharedp.edit();
+                        SharedPreferences sharedPreferences = context.getSharedPreferences("registroSharedPreferences", Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
                         editor.putInt(mail, 1);
+
+                        BatteryManager bm = (BatteryManager) activity.getSystemService(ConfirmCodeActivity.BATTERY_SERVICE);
+                        int batLevel = bm.getIntProperty(BatteryManager.BATTERY_PROPERTY_CAPACITY);
+                        int valorInicialBateria;
+                        if(batLevel < 50)valorInicialBateria= 1;
+                        else valorInicialBateria=0;
+                        editor.putInt(mail+"1",valorInicialBateria);
                         editor.apply();
                         activity.response(mensajeRespuesta);
                     } else {
