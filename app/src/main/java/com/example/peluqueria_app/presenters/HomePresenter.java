@@ -3,7 +3,6 @@ package com.example.peluqueria_app.presenters;
 import android.content.Context;
 import android.content.Intent;
 import android.hardware.Sensor;
-import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Build;
@@ -14,6 +13,7 @@ import androidx.annotation.RequiresApi;
 
 import com.example.peluqueria_app.Utils.Acelerometro;
 import com.example.peluqueria_app.Utils.Cronometro;
+import com.example.peluqueria_app.Utils.LightSensor;
 import com.example.peluqueria_app.ui.views.HomeActivity;
 
 public class HomePresenter {
@@ -23,6 +23,7 @@ public class HomePresenter {
     SensorManager sensorManager;
     HomeActivity homeActivity;
     Acelerometro acelerometro;
+    LightSensor lightSensor;
 
     public HomePresenter(Context context) {
         this.context = context;
@@ -38,45 +39,31 @@ public class HomePresenter {
     @RequiresApi(api = Build.VERSION_CODES.M)
     public void inicializarSensores(SensorManager sensorManager, HomeActivity homeActivity) {
         this.homeActivity = homeActivity;
+
+        verificarPermisosBrillo(context);
+        this.sensorManager = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
+
         acelerometro = new Acelerometro(homeActivity);
-         this.sensorManager = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
         acelerometro.setSensorManager(this.sensorManager);
         acelerometro.setShake();
-        sensor = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
-        verificarPermisosBrillo(context);
 
-        sensorEventListener = new SensorEventListener() {
-            @Override
-            public void onSensorChanged(SensorEvent event) {
-                if(event.values[0] < 20) {
-                   android.provider.Settings.System.putInt(homeActivity.getContentResolver(), Settings.System.SCREEN_BRIGHTNESS, 255);
-                }else if(event.values[0] < 50){
-                    android.provider.Settings.System.putInt(homeActivity.getContentResolver(), Settings.System.SCREEN_BRIGHTNESS, 127);
-                }else if(event.values[0] < 100){
-                    android.provider.Settings.System.putInt(homeActivity.getContentResolver(), Settings.System.SCREEN_BRIGHTNESS, 63);
-                }else{
-                    android.provider.Settings.System.putInt(homeActivity.getContentResolver(), Settings.System.SCREEN_BRIGHTNESS, 15);
-                }
-            }
-            @Override
-            public void onAccuracyChanged(Sensor sensor, int accuracy) {
-                System.out.println("Sensor de luz calibrado");
-            }
-        };
+        lightSensor = new LightSensor(homeActivity);
+        lightSensor.setSensorManager(this.sensorManager,context);
+        lightSensor.setReaction();
     }
 
     public void sacarListener() {
-        sensorManager.unregisterListener(sensorEventListener);
         acelerometro.stop();
+        lightSensor.stop();
     }
 
     public void registrarListener(){
-        sensorManager.registerListener(sensorEventListener,sensor,SensorManager.SENSOR_DELAY_NORMAL);
         acelerometro.start();
+        lightSensor.start();
     }
 
     public void pararSensorLuz(){
-        sensorManager.unregisterListener(sensorEventListener, sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT));
+        lightSensor.stop();
     }
 
     public void pararSensorAcelerometro(){
@@ -84,7 +71,7 @@ public class HomePresenter {
     }
 
     public void activarSensorLuz(){
-        sensorManager.registerListener(sensorEventListener, sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT),SensorManager.SENSOR_DELAY_NORMAL);
+        lightSensor.start();
     }
 
     public void activarSensorAcelerometro(){
